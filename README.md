@@ -103,15 +103,15 @@ The project directory structure is organized as follows:
 #### `config/`
 - **p2p.cfg**: Configuration file for peer-to-peer communication settings.
 
-### `scripts/`
+#### `scripts/`
 - **run_alice.sh**: Shell script used to start the process for *Alice*, *Bob* or *Charlie* (the participant in the secure sum protocol).
 
-### `src/`
+#### `src/`
 - **alice.py**: Script that implements the logic for *Alice*, *Bob* or *Charlie* in the secure sum protocol.
 - **display/**: Used to handle the display logic, code for the Waveshare OLED display.
 - **utils.py**: Utility functions used across the project.
 
-### `third_party/`
+#### `third_party/`
 Customized third-party libraries or external dependencies.
 - **federatedsecure/**: Customized based on the [Federated Secure Computing architecture](https://github.com/federatedsecure) 
 - **xterm/**: Customized based on [pyxterm](https://github.com/cs01/pyxtermjs) and [Xterm.js](https://xtermjs.org/)
