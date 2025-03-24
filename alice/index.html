@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Sum - Alice</title>
+
+  <!-- Add xterm CSS -->
+  <link rel="stylesheet" href="./third_party/xterm/src/node_modules/@xterm/xterm/css/xterm.css" />
+  <script src="./third_party/xterm/src/node_modules/@xterm/xterm/lib/xterm.js"></script>
+
+  <!-- Additional styles for layout -->
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+    }
+
+    header {
+      background-color: #333;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      font-size: 24px;
+      width: 100%;
+    }
+
+    header a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+    }
+
+    header a:hover {
+      text-decoration: underline;
+    }
+
+    #logo {
+      margin: 20px 0;
+      max-width: 150px;
+    }
+
+    .status {
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    #terminal-container {
+      width: 90%;
+      max-width: 800px;
+      margin: 20px 0;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      flex-grow: 1;
+      display: flex;
+    }
+
+    #terminal {
+      flex-grow: 1;
+      background-color: #1e1e1e;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        font-size: 20px;
+        padding: 15px 0;
+      }
+
+      #terminal-container {
+        width: 95%;
+      }
+
+      .status {
+        font-size: 14px;
+      }
+
+      footer {
+        font-size: 12px;
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="research-poster.pdf" target="_blank">Secure Sum Demo</a>
+    <span class="status">Status: <span id="status">Connecting...</span></span>
+  </header>
+
+  <!-- Add your logo here -->
+  <img id="logo" src="fdrsc.svg" alt="Logo" />
+
+  <div id="terminal-container">
+    <div id="terminal"></div>
+  </div>
+
+  <!-- xterm -->
+  <script src="./third_party/xterm/src/static/js/xterm.js"></script>
+  <script src="./third_party/xterm/src/static/js/xterm-addon-fit.js"></script>
+  <script src="./third_party/xterm/src/static/js/xterm-addon-web-links.js"></script>
+  <script src="./third_party/xterm/src/static/js/xterm-addon-search.js"></script>
+  <script src="./third_party/xterm/src/static/js/socket.io.min.js"></script>
+
+  <script>
+    const term = new Terminal({
+      cursorBlink: true,
+      macOptionIsMeta: true,
+      scrollback: 1000,  // Allows scrollback up to 1000 lines
+      screenKeys: true,  // Enable screen keys (optional)
+    });
+
+    const fit = new FitAddon.FitAddon();
+    term.loadAddon(fit);
+    term.loadAddon(new WebLinksAddon.WebLinksAddon());
+    term.loadAddon(new SearchAddon.SearchAddon());
+
+    term.open(document.getElementById("terminal"));
+    fit.fit();
+    term.resize(15, 50);
+    fit.fit();
+    term.writeln(" ----------------------------------------");
+    term.writeln("Welcome to Secure Sum, Alice!");  
+    term.writeln("In this protocol, you, Charlie, and Bob");
+    term.writeln("will securely compute a sum.");  
+    term.writeln("By exchanging random values,")
+    term.writeln("we will compute the total.");  
+    term.writeln("This keeps individual inputs private.");
+    term.writeln(" ----------------------------------------");
+    term.writeln("");
+    term.writeln("Watch the displays to see the process.");
+    term.writeln("Please enter your input below:");  
+
+    const socket = io.connect("/pty");
+    const status = document.getElementById("status");
+
+    // Handle input and automatically add Enter (\n) after each valid input
+    term.onData((data) => {
+      const allowedKeys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "y"];
+
+      if (allowedKeys.includes(data)) {
+        console.log("Valid input received:", data);
+        socket.emit("pty-input", { input: data });  // Send the key
+        socket.emit("pty-input", { input: "\n" });  // Auto-send Enter
+      } else {
+        console.log("Invalid key ignored:", data);
+      }
+    });
+
+    socket.on("pty-output", function (data) {
+      console.log("New output received from server:", data.output);
+      term.write(data.output);
+    });
+
+    socket.on("connect", () => {
+      fitToScreen();
+      status.innerHTML = '<span style="background-color: lightgreen;">Connected</span>';
+    });
+
+    socket.on("disconnect", () => {
+      status.innerHTML = '<span style="background-color: #ff8383;">Disconnected</span>';
+    });
+
+    function fitToScreen() {
+      fit.fit();
+      const dims = { cols: term.cols, rows: term.rows };
+      console.log("Sending new dimensions to server's pty", dims);
+      socket.emit("resize", dims);
+    }
+
+    function debounce(func, wait_ms) {
+      let timeout;
+      return function (...args) {
+        const context = this;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(context, args), wait_ms);
+      };
+    }
+
+    const wait_ms = 50;
+    window.onresize = debounce(fitToScreen, wait_ms);
+  </script>
+</body>
+</html>

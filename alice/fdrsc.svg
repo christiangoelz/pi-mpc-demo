@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="200mm"
+   height="161.06647mm"
+   viewBox="0 0 200 161.06648"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4 (1:1.4+202410161351+e7c3feb100)"
+   sodipodi:docname="fdrsc.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.71535494"
+     inkscape:cx="329.90616"
+     inkscape:cy="506.74145"
+     inkscape:window-width="1920"
+     inkscape:window-height="1011"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <clipPath
+       id="clip-14">
+      <path
+         clip-rule="nonzero"
+         d="M 0,0 H 340.15625 V 215.43359 H 0 Z m 0,0"
+         id="path102" />
+    </clipPath>
+    <clipPath
+       id="clip-15">
+      <rect
+         x="0"
+         y="0"
+         width="341"
+         height="216"
+         id="rect102" />
+    </clipPath>
+    <clipPath
+       id="clipPath1">
+      <rect
+         x="0"
+         y="0"
+         width="341"
+         height="216"
+         id="rect1" />
+    </clipPath>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-17.618895,-14.278254)">
+    <g
+       clip-path="url(#clip-14)"
+       id="g287"
+       transform="matrix(17.659825,0,0,17.659825,-439.97628,-813.3933)">
+      <g
+         id="use287"
+         clip-path="url(#clip-15)">
+        <path
+           fill-rule="nonzero"
+           fill="#fcaf3b"
+           fill-opacity="1"
+           d="m 26.226562,55.734375 h 3.1875 l 2.355469,-8.613281 h -3.183593 l -2.355469,8.59375 z m 0,0"
+           id="path1" />
+        <path
+           fill-rule="nonzero"
+           fill="#fcaf3b"
+           fill-opacity="1"
+           d="m 32.34375,47.121094 -0.675781,2.464844 h 4.578125 l 0.675781,-2.464844 z m 0,0"
+           id="path2" />
+        <path
+           fill-rule="nonzero"
+           fill="#000000"
+           fill-opacity="1"
+           d="m 31.515625,50.132812 h 2.601563 l -0.671876,2.464844 h -2.605468 z m 0,0"
+           id="path3" />
+      </g>
+    </g>
+  </g>
+</svg>
